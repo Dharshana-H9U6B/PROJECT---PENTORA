@@ -1,0 +1,3 @@
+# Models directory
+# Trained model artifacts are saved here by scripts/train_model.py
+# These files are excluded from git (.gitignore)

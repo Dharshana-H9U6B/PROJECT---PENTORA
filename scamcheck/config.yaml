@@ -1,0 +1,49 @@
+app:
+  name: ScamCheck
+  version: "1.0.0"
+  description: AI-Powered Internship & Job Opportunity Verification
+
+gemini:
+  model: gemini-2.0-flash  # Override with GEMINI_MODEL env var
+  max_output_tokens: 2048
+  temperature: 0.1
+
+dataset:
+  path: data/raw/scam_dataset.csv
+  text_column: message
+  label_column: label
+  labels:
+    scam:
+      - scam
+      - spam
+      - fraud
+      - phishing
+      - "1"
+      - 1
+    legitimate:
+      - legitimate
+      - ham
+      - safe
+      - genuine
+      - "0"
+      - 0
+
+risk_engine:
+  ml_weight: 0.30
+  gemini_weight: 0.50
+  rules_weight: 0.20
+  thresholds:
+    low: 25
+    medium: 50
+    high: 75
+    critical: 90
+
+model:
+  path: models/
+  classifier_file: scam_classifier.joblib
+  vectorizer_file: tfidf_vectorizer.joblib
+  tfidf_max_features: 10000
+  tfidf_ngram_range: [1, 2]
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42

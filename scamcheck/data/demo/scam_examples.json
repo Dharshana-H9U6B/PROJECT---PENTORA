@@ -1,0 +1,66 @@
+[
+  {
+    "id": "scam_001",
+    "title": "Fake Google Internship (Registration Fee)",
+    "text": "Congratulations! You have been selected for a Google internship. Pay ₹2,999 registration fee today to confirm your position. Only 3 seats remaining. Contact HR on WhatsApp: +91-98765-43210",
+    "expected_risk": "HIGH",
+    "expected_verdict": "POTENTIAL_SCAM",
+    "tags": ["registration_fee", "fake_company", "urgency", "whatsapp_only"]
+  },
+  {
+    "id": "scam_002",
+    "title": "Work From Home Earning Scam",
+    "text": "URGENT HIRING! Work from home and earn ₹50,000/month. No experience required. No interview needed. Just pay ₹500 registration and start immediately. WhatsApp us now: 9876543210. Offer valid today only!",
+    "expected_risk": "CRITICAL",
+    "expected_verdict": "HIGH_RISK_SCAM",
+    "tags": ["registration_fee", "urgency", "whatsapp_only", "unrealistic_salary", "no_interview"]
+  },
+  {
+    "id": "scam_003",
+    "title": "OTP and Bank Details Request",
+    "text": "Dear Candidate, you are shortlisted for our internship. Please share your Aadhaar number, bank account details and OTP received on your mobile to complete the verification process and receive your offer letter.",
+    "expected_risk": "CRITICAL",
+    "expected_verdict": "HIGH_RISK_SCAM",
+    "tags": ["otp_request", "bank_details", "aadhaar_request"]
+  },
+  {
+    "id": "scam_004",
+    "title": "Training Fee Demand",
+    "text": "Infosys BPO is hiring freshers for customer support. Selected candidates must pay ₹3500 as training and ID card fees before joining. This is mandatory for all new joiners. Contact: infosys.hr2024@gmail.com",
+    "expected_risk": "HIGH",
+    "expected_verdict": "POTENTIAL_SCAM",
+    "tags": ["training_fee", "gmail_hr", "fake_company"]
+  },
+  {
+    "id": "scam_005",
+    "title": "Phishing URL in Job Offer",
+    "text": "Amazon is hiring for data entry positions. Apply now at http://amazon-jobs-india-apply.xyz/register. Earn ₹25,000/month. Last date: Today. No experience required. Seats filling fast!",
+    "expected_risk": "CRITICAL",
+    "expected_verdict": "HIGH_RISK_SCAM",
+    "tags": ["suspicious_url", "urgency", "unrealistic_salary", "fake_company"]
+  },
+  {
+    "id": "scam_006",
+    "title": "Security Deposit Scam",
+    "text": "We are pleased to offer you an internship at TechSolutions Pvt Ltd. Please deposit ₹5000 as a refundable security deposit to our UPI ID: hr.techsolutions@upi within 24 hours to confirm your slot.",
+    "expected_risk": "HIGH",
+    "expected_verdict": "POTENTIAL_SCAM",
+    "tags": ["security_deposit", "urgency", "upi_payment"]
+  },
+  {
+    "id": "scam_007",
+    "title": "Telegram-Only Recruitment",
+    "text": "Exciting freelance opportunity! Earn ₹15,000 per week working as a social media manager. All details and tasks will be shared on Telegram only. Join our private group: t.me/freejobs2024. Limited seats available.",
+    "expected_risk": "MEDIUM",
+    "expected_verdict": "SUSPICIOUS",
+    "tags": ["telegram_only", "urgency", "unrealistic_salary"]
+  },
+  {
+    "id": "scam_008",
+    "title": "Guaranteed Job Placement Scam",
+    "text": "100% Job Guarantee! Pay ₹15,000 placement fee and get guaranteed placement in top MNCs within 30 days. No experience required. Our success rate is 100%. Pay now to avail this offer before price increases.",
+    "expected_risk": "CRITICAL",
+    "expected_verdict": "HIGH_RISK_SCAM",
+    "tags": ["placement_fee", "guaranteed_job", "urgency", "unrealistic_claims"]
+  }
+]

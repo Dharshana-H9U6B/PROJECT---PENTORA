@@ -1,0 +1,42 @@
+[
+  {
+    "id": "legit_001",
+    "title": "Legitimate Internship — Official Portal",
+    "text": "Hi, I'm reaching out from Tata Consultancy Services (TCS) regarding your application on our careers portal. We would like to invite you for a virtual interview for the Software Engineer Intern position. Please check your registered email for the interview link and schedule. The internship is a paid position (₹15,000/month stipend). No fees are required. For any queries, contact us at careers@tcs.com",
+    "expected_risk": "LOW",
+    "expected_verdict": "LIKELY_LEGIT",
+    "tags": ["official_email", "paid_internship", "no_fee", "interview_process"]
+  },
+  {
+    "id": "legit_002",
+    "title": "Campus Placement Drive",
+    "text": "Dear Students, XYZ Technologies will be conducting a campus recruitment drive on September 15th. Eligible branches: CS, IT, ECE. Package: 6 LPA. Registration through college placement portal only. Bring original documents. Contact your placement coordinator for registration.",
+    "expected_risk": "LOW",
+    "expected_verdict": "LIKELY_LEGIT",
+    "tags": ["campus_placement", "official_process", "no_fee"]
+  },
+  {
+    "id": "legit_003",
+    "title": "LinkedIn Job Application Follow-up",
+    "text": "Thank you for applying for the Product Management Intern role at Swiggy. We have reviewed your application and would like to proceed with a telephonic screening. A recruiter from our team (talent@swiggy.in) will call you on your registered number. This is a paid internship (₹20,000/month). No registration fees are involved.",
+    "expected_risk": "LOW",
+    "expected_verdict": "LIKELY_LEGIT",
+    "tags": ["official_email", "paid_internship", "no_fee"]
+  },
+  {
+    "id": "legit_004",
+    "title": "Government Job Notification",
+    "text": "UPSC Civil Services Examination 2024 — Official Notification. Applications are invited from eligible Indian citizens. Application fee: ₹100 (General), Nil (SC/ST/PwD/Women). Apply only through the official UPSC portal: upsc.gov.in. Beware of fake job portals claiming to offer guaranteed selection.",
+    "expected_risk": "LOW",
+    "expected_verdict": "LIKELY_LEGIT",
+    "tags": ["official_government", "official_portal", "transparent_fee"]
+  },
+  {
+    "id": "legit_005",
+    "title": "Startup Internship from Internshala",
+    "text": "Hi! We saw your profile on Internshala. We're a Series A funded startup and are looking for a Marketing intern for 3 months. Stipend: ₹8,000/month. Work from home. No fees. Interview rounds: 1 online assessment + 1 video call. Apply via Internshala or email your CV to hr@ourstartup.com",
+    "expected_risk": "LOW",
+    "expected_verdict": "LIKELY_LEGIT",
+    "tags": ["official_platform", "paid_internship", "no_fee", "interview_process"]
+  }
+]
