@@ -1,5 +1,7 @@
 ScamCheck — AI-Powered Internship & Job Opportunity Verification
+
 TEAM NAME: Pentora 
+
 TEAM ID: HS2026-210
 Hackspora 2.0 · Problem Statement 3
 
