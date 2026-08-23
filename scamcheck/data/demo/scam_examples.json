@@ -1,66 +1,27 @@
 [
   {
-    "id": "scam_001",
-    "title": "Fake Google Internship (Registration Fee)",
-    "text": "Congratulations! You have been selected for a Google internship. Pay ₹2,999 registration fee today to confirm your position. Only 3 seats remaining. Contact HR on WhatsApp: +91-98765-43210",
-    "expected_risk": "HIGH",
-    "expected_verdict": "POTENTIAL_SCAM",
-    "tags": ["registration_fee", "fake_company", "urgency", "whatsapp_only"]
+    "title": "Internship + Registration Fee",
+    "category": "Suspicious Internship",
+    "text": "Congratulations! You have been selected for a Software Development Internship at TechVision Pvt Ltd.\n\nRole: Python Developer Intern\nStipend: ₹15,000/month\nDuration: 3 months\n\nTo confirm your position, please pay a one-time registration fee of ₹2,999 via UPI to hr.techvision@upi within 24 hours. Seats are limited!\n\nContact: HR Team\nWhatsApp only: +91-98XXXXXXXX"
   },
   {
-    "id": "scam_002",
-    "title": "Work From Home Earning Scam",
-    "text": "URGENT HIRING! Work from home and earn ₹50,000/month. No experience required. No interview needed. Just pay ₹500 registration and start immediately. WhatsApp us now: 9876543210. Offer valid today only!",
-    "expected_risk": "CRITICAL",
-    "expected_verdict": "HIGH_RISK_SCAM",
-    "tags": ["registration_fee", "urgency", "whatsapp_only", "unrealistic_salary", "no_interview"]
+    "title": "Guaranteed Job + Upfront Payment",
+    "category": "Guaranteed Job Scam",
+    "text": "Dear Candidate,\n\nWe are pleased to inform you that you have been shortlisted for a Data Analyst position at a leading MNC.\n\n💼 Role: Data Analyst\n💰 CTC: ₹8 LPA\n✅ 100% placement guaranteed\n\nNo interview required. Just complete the registration formalities by paying ₹5,000 processing fee.\n\nPay now to: 9876543210@paytm\n\nHurry! Only 3 positions remaining. Offer expires today!"
   },
   {
-    "id": "scam_003",
-    "title": "OTP and Bank Details Request",
-    "text": "Dear Candidate, you are shortlisted for our internship. Please share your Aadhaar number, bank account details and OTP received on your mobile to complete the verification process and receive your offer letter.",
-    "expected_risk": "CRITICAL",
-    "expected_verdict": "HIGH_RISK_SCAM",
-    "tags": ["otp_request", "bank_details", "aadhaar_request"]
+    "title": "Phishing Recruitment Message",
+    "category": "Phishing",
+    "text": "URGENT: Your application for Google India has been accepted!\n\nPlease verify your identity by clicking: http://googl3-jobs.in/verify\n\nTo complete your onboarding, share your Aadhaar number and bank account details with our HR team on WhatsApp.\n\nDo not delay — your offer letter will be cancelled if not completed in 24 hours."
   },
   {
-    "id": "scam_004",
-    "title": "Training Fee Demand",
-    "text": "Infosys BPO is hiring freshers for customer support. Selected candidates must pay ₹3500 as training and ID card fees before joining. This is mandatory for all new joiners. Contact: infosys.hr2024@gmail.com",
-    "expected_risk": "HIGH",
-    "expected_verdict": "POTENTIAL_SCAM",
-    "tags": ["training_fee", "gmail_hr", "fake_company"]
+    "title": "OTP Request During Onboarding",
+    "category": "OTP/Credential Scam",
+    "text": "Congratulations on being selected for our remote work program!\n\nYou will earn ₹40,000/month working from home — no experience required.\n\nTo activate your account and receive your first payment, please share the OTP you just received on your mobile number with our onboarding team at: +91-7XXXXXXXXX\n\nThis is a time-sensitive process. Do not close this window."
   },
   {
-    "id": "scam_005",
-    "title": "Phishing URL in Job Offer",
-    "text": "Amazon is hiring for data entry positions. Apply now at http://amazon-jobs-india-apply.xyz/register. Earn ₹25,000/month. Last date: Today. No experience required. Seats filling fast!",
-    "expected_risk": "CRITICAL",
-    "expected_verdict": "HIGH_RISK_SCAM",
-    "tags": ["suspicious_url", "urgency", "unrealistic_salary", "fake_company"]
-  },
-  {
-    "id": "scam_006",
-    "title": "Security Deposit Scam",
-    "text": "We are pleased to offer you an internship at TechSolutions Pvt Ltd. Please deposit ₹5000 as a refundable security deposit to our UPI ID: hr.techsolutions@upi within 24 hours to confirm your slot.",
-    "expected_risk": "HIGH",
-    "expected_verdict": "POTENTIAL_SCAM",
-    "tags": ["security_deposit", "urgency", "upi_payment"]
-  },
-  {
-    "id": "scam_007",
-    "title": "Telegram-Only Recruitment",
-    "text": "Exciting freelance opportunity! Earn ₹15,000 per week working as a social media manager. All details and tasks will be shared on Telegram only. Join our private group: t.me/freejobs2024. Limited seats available.",
-    "expected_risk": "MEDIUM",
-    "expected_verdict": "SUSPICIOUS",
-    "tags": ["telegram_only", "urgency", "unrealistic_salary"]
-  },
-  {
-    "id": "scam_008",
-    "title": "Guaranteed Job Placement Scam",
-    "text": "100% Job Guarantee! Pay ₹15,000 placement fee and get guaranteed placement in top MNCs within 30 days. No experience required. Our success rate is 100%. Pay now to avail this offer before price increases.",
-    "expected_risk": "CRITICAL",
-    "expected_verdict": "HIGH_RISK_SCAM",
-    "tags": ["placement_fee", "guaranteed_job", "urgency", "unrealistic_claims"]
+    "title": "Fake Company Impersonation",
+    "category": "Impersonation",
+    "text": "Amazon India is currently hiring Work From Home Associates!\n\n🏠 Work from home\n💰 Salary: ₹25,000 - ₹45,000/month\n🎓 Freshers welcome\n\nApply now: http://amazon-jobs-india.in/apply2024\n\nRegistration open — apply before slots fill up!\nContact: amazonhrindia2024@gmail.com"
   }
 ]

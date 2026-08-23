@@ -150,6 +150,7 @@ class AnalysisService:
         role: str = "",
         salary: str = "",
         registration_fee: str = "",
+        application_fee: str = "",
         contact_method: str = "",
         website: str = "",
         description: str = "",
@@ -181,6 +182,7 @@ class AnalysisService:
                     role=role,
                     salary=salary,
                     registration_fee=registration_fee,
+                    application_fee=application_fee,
                     contact_method=contact_method,
                     website=website,
                     description=description,
@@ -231,20 +233,21 @@ class AnalysisService:
 
         if gemini_result is None:
             # Cannot do image analysis without Gemini (no local OCR)
-            from backend.schemas import AnalysisResult, RiskLevel, Verdict
+            from backend.schemas import RiskLevel, Verdict
             diag_err = self._last_gemini_error or "Gemini provider unavailable"
             return AnalysisResult(
-                risk_score=0,
-                risk_level=RiskLevel.LOW,
-                verdict=Verdict.LIKELY_LEGIT,
+                risk_score=None,
+                risk_level=RiskLevel.UNKNOWN,
+                verdict=Verdict.ANALYSIS_UNAVAILABLE,
                 confidence=0.0,
                 explanation=(
-                    "Image analysis requires Gemini API, which is currently unavailable. "
-                    "Please configure your GEMINI_API_KEY or paste the message text instead."
+                    "Image analysis requires Gemini AI, which is currently unavailable. "
+                    "No risk classification can be made from the image alone. "
+                    "Please paste the message text in the 'Message' tab to analyze it."
                 ),
-                recommendation="Use the 'Paste Message' tab to analyze text directly.",
+                recommendation="Use the 'Message' tab to paste and analyze the opportunity text directly.",
                 provider_used="unavailable",
-                analysis_error=f"Gemini unavailable for image analysis ({diag_err}).",
+                analysis_error=f"Gemini unavailable: {diag_err}",
             )
 
         # For images, we trust Gemini's result

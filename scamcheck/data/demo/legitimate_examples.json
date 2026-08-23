@@ -1,42 +1,27 @@
 [
   {
-    "id": "legit_001",
-    "title": "Legitimate Internship — Official Portal",
-    "text": "Hi, I'm reaching out from Tata Consultancy Services (TCS) regarding your application on our careers portal. We would like to invite you for a virtual interview for the Software Engineer Intern position. Please check your registered email for the interview link and schedule. The internship is a paid position (₹15,000/month stipend). No fees are required. For any queries, contact us at careers@tcs.com",
-    "expected_risk": "LOW",
-    "expected_verdict": "LIKELY_LEGIT",
-    "tags": ["official_email", "paid_internship", "no_fee", "interview_process"]
+    "title": "Legitimate Internship (Infosys)",
+    "category": "Legitimate Internship",
+    "text": "Infosys is inviting applications for its Summer Internship Program 2024.\n\nRole: Software Engineering Intern\nDuration: 2 months (May–June 2024)\nStipend: ₹20,000/month\nLocation: Bengaluru / Pune / Hyderabad\n\nEligibility:\n- B.Tech / M.Tech students (2025 graduating batch)\n- CGPA ≥ 7.0\n- Strong fundamentals in Data Structures and Algorithms\n\nHow to Apply:\nVisit campus.infosys.com and submit your application by 31st March 2024.\n\nSelection Process: Aptitude Test → Technical Interview → HR Interview\n\nNo registration fee. No advance payment required.\n\nFor queries: internships@infosys.com"
   },
   {
-    "id": "legit_002",
-    "title": "Campus Placement Drive",
-    "text": "Dear Students, XYZ Technologies will be conducting a campus recruitment drive on September 15th. Eligible branches: CS, IT, ECE. Package: 6 LPA. Registration through college placement portal only. Bring original documents. Contact your placement coordinator for registration.",
-    "expected_risk": "LOW",
-    "expected_verdict": "LIKELY_LEGIT",
-    "tags": ["campus_placement", "official_process", "no_fee"]
+    "title": "Paid Certification (Finance Skills)",
+    "category": "Paid Training",
+    "text": "Master the most in-demand finance skills with industry-led certifications in:\n\n✅ Gen AI in Finance & Excel with Copilot\n✅ IFRS & US GAAP\n✅ Financial Modelling\n✅ Advanced Excel & more\n\nEnrol at just ₹22,000 + GST\nIncludes 2 complimentary certifications\n\nBatch starting: September 2024\nMode: Online, weekend sessions\n\nFor more details or to enrol, visit: www.financecertify.in\nOr call: 1800-XXX-XXXX (Mon–Sat, 9am–6pm)"
   },
   {
-    "id": "legit_003",
-    "title": "LinkedIn Job Application Follow-up",
-    "text": "Thank you for applying for the Product Management Intern role at Swiggy. We have reviewed your application and would like to proceed with a telephonic screening. A recruiter from our team (talent@swiggy.in) will call you on your registered number. This is a paid internship (₹20,000/month). No registration fees are involved.",
-    "expected_risk": "LOW",
-    "expected_verdict": "LIKELY_LEGIT",
-    "tags": ["official_email", "paid_internship", "no_fee"]
+    "title": "Legitimate Job Posting (LinkedIn Style)",
+    "category": "Legitimate Job",
+    "text": "TCS is hiring for the role of Business Analyst — Entry Level\n\nLocation: Mumbai, India\nExperience: 0–2 years\nSalary: ₹4.5 LPA – ₹6 LPA\n\nJob Description:\n- Analyze business requirements and translate them into functional specifications\n- Work with stakeholders across finance and operations teams\n- Support project planning and documentation\n\nRequired Skills:\n- Strong analytical and communication skills\n- Proficiency in MS Excel and PowerPoint\n- Basic understanding of SDLC\n\nHow to Apply:\nApply through ibegin.tcs.com or through our official LinkedIn page.\n\nTCS will never ask candidates to pay any fees during the recruitment process."
   },
   {
-    "id": "legit_004",
-    "title": "Government Job Notification",
-    "text": "UPSC Civil Services Examination 2024 — Official Notification. Applications are invited from eligible Indian citizens. Application fee: ₹100 (General), Nil (SC/ST/PwD/Women). Apply only through the official UPSC portal: upsc.gov.in. Beware of fake job portals claiming to offer guaranteed selection.",
-    "expected_risk": "LOW",
-    "expected_verdict": "LIKELY_LEGIT",
-    "tags": ["official_government", "official_portal", "transparent_fee"]
+    "title": "Scholarship Opportunity",
+    "category": "Scholarship",
+    "text": "The National Merit Scholarship Foundation is accepting applications for the 2024–25 academic year.\n\nAward: Up to ₹1,00,000 per year\nEligibility: Students enrolled in accredited undergraduate programs\nCriteria: Academic merit + financial need\n\nHow to Apply:\n1. Complete the online application at nmsf.gov.in\n2. Attach income certificate, bonafide letter, and marksheets\n3. Applications close: 15th October 2024\n\nNo application fee. Shortlisted candidates will be interviewed by a committee.\n\nFor help: scholarship@nmsf.gov.in"
   },
   {
-    "id": "legit_005",
-    "title": "Startup Internship from Internshala",
-    "text": "Hi! We saw your profile on Internshala. We're a Series A funded startup and are looking for a Marketing intern for 3 months. Stipend: ₹8,000/month. Work from home. No fees. Interview rounds: 1 online assessment + 1 video call. Apply via Internshala or email your CV to hr@ourstartup.com",
-    "expected_risk": "LOW",
-    "expected_verdict": "LIKELY_LEGIT",
-    "tags": ["official_platform", "paid_internship", "no_fee", "interview_process"]
+    "title": "Legitimate Remote Work Offer",
+    "category": "Legitimate Remote Job",
+    "text": "Flipkart is hiring Customer Support Associates — Work From Home\n\nRole: Customer Support Associate (Voice + Chat)\nType: Full-time, Permanent\nShift: Rotational (9-hour shifts)\nSalary: ₹18,000 – ₹22,000/month + incentives\n\nRequirements:\n- Minimum 12th pass\n- Good communication skills in Hindi + English\n- Own laptop/desktop with reliable internet\n\nApplication Process:\n1. Apply at careers.flipkart.com\n2. Complete online assessment\n3. Video interview (scheduled by HR)\n\nFlipcart does not charge any fee from applicants at any stage of the hiring process.\n\nFor queries, contact: jobs@flipkart.com"
   }
 ]

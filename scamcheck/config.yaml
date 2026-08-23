@@ -4,7 +4,7 @@ app:
   description: AI-Powered Internship & Job Opportunity Verification
 
 gemini:
-  model: gemini-3.6-flash  # Override with GEMINI_MODEL env var
+  model: gemini-2.0-flash  # Override with GEMINI_MODEL env var
   max_output_tokens: 2048
   temperature: 0.1
 
@@ -32,11 +32,30 @@ risk_engine:
   ml_weight: 0.30
   gemini_weight: 0.50
   rules_weight: 0.20
+
+  # Risk thresholds (0-100 score → risk level)
   thresholds:
     low: 25
     medium: 50
     high: 75
     critical: 90
+
+  # How much a payment type contributes to the rule engine score.
+  # EMPLOYMENT_PAYMENT = full contribution (paying to get a job is always suspicious)
+  # TRAINING_PAYMENT = zero contribution (paying for a course is not a scam signal)
+  payment_context_multipliers:
+    EMPLOYMENT_PAYMENT: 1.0
+    APPLICATION_PAYMENT: 0.6
+    UNKNOWN: 0.4
+    TRAINING_PAYMENT: 0.0
+    PRODUCT_OR_SERVICE_PAYMENT: 0.0
+    NONE: 0.2
+
+  # Analysis consistency thresholds (max score spread between providers)
+  consistency:
+    high_threshold: 15     # All signals within 15 pts → HIGH consistency
+    medium_threshold: 35   # Spread < 35 pts → MEDIUM consistency
+    low_confidence_cap: 0.65  # Cap confidence at 65% when consistency is LOW
 
 model:
   path: models/
@@ -47,3 +66,10 @@ model:
   test_size: 0.2
   validation_size: 0.1
   random_state: 42
+
+input:
+  max_text_length: 5000    # Characters; truncate with warning above this
+  min_text_length: 10      # Reject inputs shorter than this
+
+feedback:
+  path: data/feedback/feedback.jsonl
