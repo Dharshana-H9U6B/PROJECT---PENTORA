@@ -4,7 +4,7 @@ app:
   description: AI-Powered Internship & Job Opportunity Verification
 
 gemini:
-  model: gemini-2.0-flash  # Override with GEMINI_MODEL env var
+  model: gemini-3.6-flash  # Override with GEMINI_MODEL env var
   max_output_tokens: 2048
   temperature: 0.1
 

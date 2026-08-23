@@ -38,7 +38,7 @@ def load_config() -> dict:
         gemini_cfg["model"] = env_model
 
     # Make sure model has a sensible default
-    gemini_cfg.setdefault("model", "gemini-2.0-flash")
+    gemini_cfg.setdefault("model", "gemini-3.6-flash")
 
     return config
 

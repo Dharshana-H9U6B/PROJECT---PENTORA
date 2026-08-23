@@ -53,6 +53,11 @@ def detect_financial_indicators(text: str) -> List[WarningIndicator]:
     for pattern, description in HIGH_PATTERNS:
         match = re.search(pattern, lower_text)
         if match:
+            # Skip rupee-amount matches that are clearly salary/stipend descriptions
+            if "rupees" in description.lower() or "rupee" in description.lower():
+                if _is_salary_context(lower_text, match.start(), match.end()):
+                    continue
+
             evidence_text = _extract_context(text, match.start(), match.end())
             indicator_type = "UPFRONT_PAYMENT"
             if indicator_type not in seen_types:
@@ -96,3 +101,22 @@ def _extract_context(text: str, start: int, end: int, window: int = 60) -> str:
     if ctx_end < len(text):
         snippet = snippet + "..."
     return snippet
+
+
+# Words that indicate a salary/income context rather than a fee request
+_SALARY_CONTEXT_WORDS = [
+    "pays", "pay ", "stipend", "salary", "earn ", "earns", "package",
+    "per month", "/month", "per annum", "lpa", "per year", "annually",
+    "compensation", "income", "remuneration",
+]
+
+
+def _is_salary_context(lower_text: str, match_start: int, match_end: int, window: int = 50) -> bool:
+    """
+    Return True if the matched rupee amount appears in a salary/income context
+    (as opposed to a fee/payment request context).
+    """
+    ctx_start = max(0, match_start - window)
+    ctx_end = min(len(lower_text), match_end + window)
+    context = lower_text[ctx_start:ctx_end]
+    return any(word in context for word in _SALARY_CONTEXT_WORDS)

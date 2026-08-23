@@ -89,11 +89,11 @@ class AnalysisResult:
 
 def risk_level_from_score(score: float) -> str:
     """Derive risk level string from a 0–100 score."""
-    if score >= 90:
+    if score >= 75:
         return RiskLevel.CRITICAL
-    elif score >= 75:
-        return RiskLevel.HIGH
     elif score >= 50:
+        return RiskLevel.HIGH
+    elif score >= 25:
         return RiskLevel.MEDIUM
     else:
         return RiskLevel.LOW
@@ -101,11 +101,11 @@ def risk_level_from_score(score: float) -> str:
 
 def verdict_from_score(score: float) -> str:
     """Derive verdict string from a 0–100 score."""
-    if score >= 90:
+    if score >= 75:
         return Verdict.HIGH_RISK_SCAM
-    elif score >= 70:
+    elif score >= 50:
         return Verdict.POTENTIAL_SCAM
-    elif score >= 45:
+    elif score >= 25:
         return Verdict.SUSPICIOUS
     else:
         return Verdict.LIKELY_LEGIT

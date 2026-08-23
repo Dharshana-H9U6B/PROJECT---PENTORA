@@ -23,7 +23,9 @@ SUSPICIOUS_URL_KEYWORDS = [
 ]
 
 URL_PATTERN = re.compile(
-    r"https?://[^\s<>\"']+|www\.[^\s<>\"']+"
+    r"https?://[^\s<>\"']+"
+    r"|www\.[^\s<>\"']+"
+    r"|(?:bit\.ly|tinyurl\.com|t\.co|goo\.gl|ow\.ly|buff\.ly|rb\.gy|cutt\.ly|is\.gd|tiny\.cc)/[^\s<>\"']+"
 )
 
 
@@ -46,8 +48,8 @@ def _analyze_url(url: str) -> List[WarningIndicator]:
     """Analyze a single URL for red flags."""
     indicators = []
 
-    # Normalize: add scheme if missing
-    if url.startswith("www."):
+    # Normalize: add scheme if missing (handles www.x.com and bit.ly/... etc.)
+    if not url.startswith(("http://", "https://")):
         url = "http://" + url
 
     try:

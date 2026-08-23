@@ -8,7 +8,20 @@ All prompt logic is imported from backend/prompts/.
 import json
 import logging
 import re
-from typing import Optional
+import time
+from typing import Optional, Callable, TypeVar
+
+_T = TypeVar("_T")
+
+# Transient network errors that are safe to retry
+_RETRYABLE_MESSAGES = (
+    "WinError 10053",  # Connection aborted by host
+    "WinError 10054",  # Connection reset by remote
+    "ReadError",
+    "ConnectError",
+    "RemoteProtocolError",
+    "Connection reset",
+)
 
 from PIL.Image import Image as PILImage
 
@@ -48,26 +61,33 @@ class GeminiProvider(ScamAnalysisProvider):
 
     def _try_init(self):
         """Attempt to initialize the Gemini client."""
+        logger.info("[GeminiProvider:init] Starting Gemini provider initialization.")
         try:
             from google import genai
 
             api_key = get_gemini_api_key()
-            if not api_key:
+            has_key = bool(api_key and len(api_key.strip()) > 0)
+            logger.info(f"[GeminiProvider:init] api_key_present={has_key}")
+
+            if not has_key:
                 self._init_error = "GEMINI_API_KEY not set in environment."
+                logger.warning(f"[GeminiProvider:init] {self._init_error}")
                 return
 
             config = get_config()
-            self._model_name = config.get("gemini", {}).get("model", "gemini-2.0-flash")
+            self._model_name = config.get("gemini", {}).get("model", "gemini-3.6-flash")
+            logger.info(f"[GeminiProvider:init] configured_model={self._model_name}")
 
             self._client = genai.Client(api_key=api_key)
             self._initialized = True
-            logger.info(f"GeminiProvider initialized with model: {self._model_name}")
+            logger.info(f"[GeminiProvider:init] Successfully initialized with model: {self._model_name}")
 
-        except ImportError:
+        except ImportError as e:
             self._init_error = "google-genai package not installed."
+            logger.error(f"[GeminiProvider:init] [Exception: {type(e).__name__}] {self._init_error}: {e}")
         except Exception as e:
-            self._init_error = f"Gemini initialization failed: {str(e)}"
-            logger.error(self._init_error)
+            self._init_error = f"Gemini initialization failed ({type(e).__name__}): {str(e)}"
+            logger.error(f"[GeminiProvider:init] [Exception: {type(e).__name__}] {self._init_error}")
 
     def is_available(self) -> bool:
         return self._initialized and self._client is not None
@@ -104,58 +124,95 @@ class GeminiProvider(ScamAnalysisProvider):
 
         raise ValueError(f"Could not extract valid JSON from response: {text[:200]}")
 
+    def _is_retryable(self, exc: Exception) -> bool:
+        """Return True if exception is a transient network error worth retrying."""
+        exc_str = str(exc)
+        exc_type = type(exc).__name__
+        return (
+            any(msg in exc_str for msg in _RETRYABLE_MESSAGES)
+            or any(t in exc_type for t in ("ReadError", "ConnectError", "RemoteProtocolError"))
+        )
+
+    def _call_with_retry(self, fn: Callable[[], _T], label: str, max_retries: int = 3) -> _T:
+        """Call fn() with retry on transient network errors."""
+        last_exc: Optional[Exception] = None
+        for attempt in range(1, max_retries + 1):
+            try:
+                return fn()
+            except Exception as e:
+                if self._is_retryable(e) and attempt < max_retries:
+                    wait = 2 ** (attempt - 1)  # 1s, 2s backoff
+                    logger.warning(
+                        f"[GeminiProvider:{label}] Transient network error (attempt {attempt}/{max_retries}), "
+                        f"retrying in {wait}s. [{type(e).__name__}]: {e}"
+                    )
+                    time.sleep(wait)
+                    last_exc = e
+                else:
+                    raise
+        raise last_exc  # type: ignore[misc]
+
     def _call_gemini(self, prompt: str) -> str:
         """Send a text prompt to Gemini and return the response text."""
         from google.genai import types
 
-        response = self._client.models.generate_content(
-            model=self._model_name,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
-                temperature=0.1,
-                max_output_tokens=2048,
-            ),
-        )
-        return response.text
+        logger.info(f"[GeminiProvider:text_call_start] model={self._model_name}")
+
+        def _do_call() -> str:
+            response = self._client.models.generate_content(
+                model=self._model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    temperature=0.1,
+                    max_output_tokens=2048,
+                ),
+            )
+            return response.text
+
+        text = self._call_with_retry(_do_call, label="text_call")
+        logger.info(f"[GeminiProvider:text_call_success] response length={len(text) if text else 0}")
+        return text
 
     def _call_gemini_with_image(self, prompt: str, image: PILImage) -> str:
         """Send a multimodal (text + image) prompt to Gemini."""
         from google.genai import types
 
-        # Convert PIL image to bytes for the API
-        import io
-        img_bytes = io.BytesIO()
-        fmt = image.format or "PNG"
-        image.save(img_bytes, format=fmt)
-        img_bytes.seek(0)
-
-        mime_type = f"image/{fmt.lower()}"
-        if mime_type == "image/jpg":
-            mime_type = "image/jpeg"
-
-        response = self._client.models.generate_content(
-            model=self._model_name,
-            contents=[
-                types.Part.from_bytes(data=img_bytes.read(), mime_type=mime_type),
-                prompt,
-            ],
-            config=types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
-                temperature=0.1,
-                max_output_tokens=2048,
-            ),
+        logger.info(
+            f"[GeminiProvider:image_call_start] model={self._model_name}, "
+            f"image_size={image.size if hasattr(image, 'size') else 'unknown'}"
         )
-        return response.text
+
+        def _do_call() -> str:
+            response = self._client.models.generate_content(
+                model=self._model_name,
+                contents=[
+                    image,
+                    prompt,
+                ],
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    temperature=0.1,
+                    max_output_tokens=2048,
+                ),
+            )
+            return response.text
+
+        text = self._call_with_retry(_do_call, label="image_call")
+        logger.info(f"[GeminiProvider:image_call_success] response length={len(text) if text else 0}")
+        return text
 
     def _parse_response(self, raw_text: str) -> AnalysisResult:
         """Parse and validate Gemini's JSON response."""
+        logger.info("[GeminiProvider:parse_start] Parsing raw response")
         try:
             data = self._extract_json(raw_text)
-            return validate_gemini_response(data)
+            result = validate_gemini_response(data)
+            logger.info(f"[GeminiProvider:parse_success] parsed risk_score={result.risk_score}, risk_level={result.risk_level}")
+            return result
         except Exception as e:
-            logger.error(f"Failed to parse Gemini response: {e}")
-            logger.debug(f"Raw response: {raw_text[:500]}")
+            logger.error(f"[GeminiProvider:parse_error] [Exception: {type(e).__name__}] Failed to parse Gemini response: {e}")
+            logger.debug(f"Raw response preview: {raw_text[:500]}")
             # Return a safe fallback result
             return AnalysisResult(
                 risk_score=50.0,
@@ -165,15 +222,15 @@ class GeminiProvider(ScamAnalysisProvider):
                 explanation="Analysis partially completed. Could not fully parse AI response.",
                 recommendation="Please verify this opportunity independently.",
                 provider_used="gemini",
-                analysis_error=f"Response parsing error: {str(e)}",
+                analysis_error=f"Response parsing error ({type(e).__name__}): {str(e)}",
             )
 
     def analyze_text(self, text: str) -> AnalysisResult:
         """Analyze a text message using Gemini."""
         if not self.is_available():
-            raise RuntimeError(
-                f"GeminiProvider not available: {self._init_error}"
-            )
+            err_msg = f"GeminiProvider not available: {self._init_error}"
+            logger.error(f"[GeminiProvider:analyze_text] {err_msg}")
+            raise RuntimeError(err_msg)
 
         prompt = TEXT_ANALYSIS_PROMPT.format(text=text)
         try:
@@ -182,15 +239,15 @@ class GeminiProvider(ScamAnalysisProvider):
             result.provider_used = "gemini"
             return result
         except Exception as e:
-            logger.error(f"Gemini analyze_text failed: {e}")
+            logger.error(f"[GeminiProvider:analyze_text] [Exception: {type(e).__name__}] Gemini analyze_text failed: {e}")
             raise
 
     def analyze_image(self, image: PILImage, context: Optional[str] = None) -> AnalysisResult:
         """Analyze a screenshot using Gemini's multimodal capabilities."""
         if not self.is_available():
-            raise RuntimeError(
-                f"GeminiProvider not available: {self._init_error}"
-            )
+            err_msg = f"GeminiProvider not available: {self._init_error}"
+            logger.error(f"[GeminiProvider:analyze_image] {err_msg}")
+            raise RuntimeError(err_msg)
 
         prompt = IMAGE_ANALYSIS_PROMPT
         if context:
@@ -202,7 +259,7 @@ class GeminiProvider(ScamAnalysisProvider):
             result.provider_used = "gemini"
             return result
         except Exception as e:
-            logger.error(f"Gemini analyze_image failed: {e}")
+            logger.error(f"[GeminiProvider:analyze_image] [Exception: {type(e).__name__}] Gemini analyze_image failed: {e}")
             raise
 
     def analyze_structured(
@@ -217,9 +274,9 @@ class GeminiProvider(ScamAnalysisProvider):
     ) -> AnalysisResult:
         """Analyze a structured job/internship opportunity form."""
         if not self.is_available():
-            raise RuntimeError(
-                f"GeminiProvider not available: {self._init_error}"
-            )
+            err_msg = f"GeminiProvider not available: {self._init_error}"
+            logger.error(f"[GeminiProvider:analyze_structured] {err_msg}")
+            raise RuntimeError(err_msg)
 
         prompt = STRUCTURED_ANALYSIS_PROMPT.format(
             company=company or "Not provided",
@@ -236,5 +293,5 @@ class GeminiProvider(ScamAnalysisProvider):
             result.provider_used = "gemini"
             return result
         except Exception as e:
-            logger.error(f"Gemini analyze_structured failed: {e}")
+            logger.error(f"[GeminiProvider:analyze_structured] [Exception: {type(e).__name__}] Gemini analyze_structured failed: {e}")
             raise

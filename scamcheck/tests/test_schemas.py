@@ -24,14 +24,14 @@ class TestRiskLevelFromScore:
 
     def test_medium(self):
         assert risk_level_from_score(25) == RiskLevel.MEDIUM
-        assert risk_level_from_score(74) == RiskLevel.MEDIUM
+        assert risk_level_from_score(49) == RiskLevel.MEDIUM
 
     def test_high(self):
-        assert risk_level_from_score(75) == RiskLevel.HIGH
-        assert risk_level_from_score(89) == RiskLevel.HIGH
+        assert risk_level_from_score(50) == RiskLevel.HIGH
+        assert risk_level_from_score(74) == RiskLevel.HIGH
 
     def test_critical(self):
-        assert risk_level_from_score(90) == RiskLevel.CRITICAL
+        assert risk_level_from_score(75) == RiskLevel.CRITICAL
         assert risk_level_from_score(100) == RiskLevel.CRITICAL
 
 
@@ -40,13 +40,13 @@ class TestVerdictFromScore:
         assert verdict_from_score(10) == Verdict.LIKELY_LEGIT
 
     def test_suspicious(self):
-        assert verdict_from_score(50) == Verdict.SUSPICIOUS
+        assert verdict_from_score(30) == Verdict.SUSPICIOUS
 
     def test_potential_scam(self):
-        assert verdict_from_score(75) == Verdict.POTENTIAL_SCAM
+        assert verdict_from_score(55) == Verdict.POTENTIAL_SCAM
 
     def test_high_risk_scam(self):
-        assert verdict_from_score(92) == Verdict.HIGH_RISK_SCAM
+        assert verdict_from_score(80) == Verdict.HIGH_RISK_SCAM
 
 
 class TestValidateGeminiResponse:
